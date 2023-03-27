@@ -11,6 +11,7 @@ function App() {
   );
   const [isValidPresupuesto, setIsValidPresupuesto] = useState(false);
   const [gastos, setGastos] = useState(
+    //JSON.parse convierte string a arrays
     localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : []
   );
 
@@ -29,15 +30,18 @@ function App() {
     }
   }, [gastoEdiar])
 
+  //solo se ejecuta cuando cambia el presupuesto
   useEffect(() => {
     localStorage.setItem('presupuesto', presupuesto ?? 0)
   }, [presupuesto])
 
+  //solo escucha los cambios que suceden en gastos
   useEffect(() => {
+    //localstorage no almacena arrays, JSON stringify convierte arrays a string
     localStorage.setItem('gastos', JSON.stringify(gastos) ?? [])
   }, [gastos])
   
-  
+  //se ejecuta una sola vez cuando carga la app
   useEffect(() => {
     const presupuestoLS = Number(localStorage.getItem('presupuesto')) ?? 0;
     if(presupuestoLS > 0){
