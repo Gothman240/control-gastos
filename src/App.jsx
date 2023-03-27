@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Modal from "./components/Modal";
+import Filtros from "./components/Filtros";
 import ListadoGastos from "./components/ListadoGastos";
 import { generarId } from "./helpers";
 import IconoNuevoGasto from "./assets/img/nuevo-gasto.svg";
@@ -19,6 +20,10 @@ function App() {
   const [animarModal, setAnimarModal] = useState(false);
   //editar con el swipe
   const [gastoEdiar, setGastoEdiar] = useState({})
+
+  const [filtro, setFiltro] = useState('')
+
+  const [gastosFiltrados, setGastosFiltrados] = useState([])
 
   useEffect(() => {
     if(Object.keys(gastoEdiar).length > 0){
@@ -40,6 +45,16 @@ function App() {
     //localstorage no almacena arrays, JSON stringify convierte arrays a string
     localStorage.setItem('gastos', JSON.stringify(gastos) ?? [])
   }, [gastos])
+
+  useEffect(() => {
+    if(filtro){
+      //filtrar gastos por categoria
+      const gastosFiltrados = gastos.filter(gasto => gasto.categoria === filtro)
+      setGastosFiltrados(gastosFiltrados)
+    }
+    
+  }, [filtro])
+  
   
   //se ejecuta una sola vez cuando carga la app
   useEffect(() => {
@@ -94,11 +109,17 @@ function App() {
       />
       {isValidPresupuesto && (
         <>
+          <Filtros
+            filtro={filtro}
+            setFiltro={setFiltro}
+          />
           <main>
             <ListadoGastos 
               gastos={gastos}
               setGastoEdiar={setGastoEdiar}
               eliminarGasto={eliminarGasto}
+              filtro={filtro}
+              gastosFiltrados={gastosFiltrados}
             />
           </main>
           <div className="nuevo-gasto">
