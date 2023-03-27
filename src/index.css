@@ -207,7 +207,7 @@ header h1 {
 }
 .contenido-presupuesto p.negativo,
 .contenido-presupuesto p.negativo span {
-    color: red;
+    color: #DC2626;
 }
 .contenido-presupuesto span {
     font-weight: 900;
@@ -232,10 +232,11 @@ header h1 {
 }
 
 main {
-    padding-top: 10rem;
+    padding-bottom: 10rem;
 }
 
 .filtros .campo {
+    margin-top: 6rem;
     display: flex;
     align-items: center;
     gap: 2rem;
